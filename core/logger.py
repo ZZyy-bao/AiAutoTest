@@ -73,7 +73,7 @@ class LogSetup:
             backupCount=7,  # 保留 7 个文件（即7天）
             encoding="utf-8"
         )
-        file_handler.setLevel(logging.INFO) # 文件通常记录 INFO 及以上级别，减少磁盘占用
+        file_handler.setLevel(logging.DEBUG)
         file_formatter = logging.Formatter(fmt_str, datefmt=date_fmt)
         file_handler.setFormatter(file_formatter)
         self.logger.addHandler(file_handler)

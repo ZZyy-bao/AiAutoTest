@@ -29,6 +29,7 @@ class AiChat:
             )
             end_time = datetime.now().strftime("%H%M%S")
             response_content = completion.choices[0].message.content
+            logger.info(f"[{self.model_name}] 请求成功 | 耗时: {start_time}-{end_time} | 输出长度: {len(response_content)}")
             chat_message = {
                 "model_name":self.model_name,
                 "system_content": system_content,
@@ -54,24 +55,26 @@ class AiKimi(AiChat):
         api_key_kimi = os.getenv("apikey_kimi")
         if not api_key_kimi:
             logger.error("环境变量 apikey_kimi 未设置")
-            
+
         base_url = "https://api.moonshot.cn/v1"
         super().__init__(
             api_key=api_key_kimi, 
             base_url=base_url,
             model_name=USING_MODEL_KIMI
         )
+        logger.info(f"AiKimi 初始化完成, model={USING_MODEL_KIMI}")
 
 class AiDeepseek(AiChat):
     def __init__(self):
         api_key_deepseek = os.getenv("apikey_deepseek")
         if not api_key_deepseek:
             logger.error("环境变量 apikey_deepseek 未设置")
-            
+
         base_url = "https://api.deepseek.com"
         super().__init__(
             api_key=api_key_deepseek, 
             base_url=base_url,
             model_name=USING_MODEL_DEEPSEEK
         )
+        logger.info(f"AiDeepseek 初始化完成, model={USING_MODEL_DEEPSEEK}")
 
