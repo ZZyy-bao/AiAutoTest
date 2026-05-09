@@ -85,11 +85,6 @@ Allure 需要 `JAVA_HOME` 环境变量指向 JDK 安装目录。
 set JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-17.0.12.7-hotspot
 set PATH=%JAVA_HOME%\bin;%PATH%
 
-# 或通过 PowerShell
-$env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-17.0.12.7-hotspot"
-$env:Path += ";$env:JAVA_HOME\bin"
-```
-
 永久设置：打开 **系统属性 → 高级 → 环境变量**，新建系统变量 `JAVA_HOME`，值为 JDK 安装路径，然后在 `Path` 中添加 `%JAVA_HOME%\bin`。
 
 验证配置：
@@ -101,13 +96,7 @@ java -version
 
 ### 4. 安装 Allure CLI
 
-**方法一：使用 winget 安装**
-
-```bash
-winget install -e --id=Allure.Allure
-```
-
-**方法二：手动安装**
+**推荐手动安装**
 
 1. 下载 Allure：https://github.com/allure-framework/allure2/releases
 2. 解压到任意目录（如 `D:\WorkFile\allure-2.40.0`）
@@ -161,28 +150,13 @@ python run.py
 
 ## 查看测试报告
 
-### 方法一：使用 Allure CLI（推荐）
+### 使用 Allure CLI（推荐）
 
 ```bash
 allure open test_report\YYYYMMDD-HHMMSS\allure-report
 ```
 
 会自动启动 Web 服务并在浏览器打开。
-
-### 方法二：使用 Python HTTP 服务
-
-```bash
-cd test_report\YYYYMMDD-HHMMSS
-python -m http.server 8080
-```
-
-浏览器访问 `http://localhost:8080/allure-report/`
-
-### 方法三：直接打开（不推荐）
-
-直接双击 `allure-report/index.html` 可能因浏览器安全策略显示空白页，建议使用方法一或二。
-
----
 
 ## 框架核心流程
 
