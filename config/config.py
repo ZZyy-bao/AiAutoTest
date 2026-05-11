@@ -14,6 +14,7 @@ BASE_MODEL_LLM_MODEL = "deepseek-v4-flash"
 
 DEFAULT_SYSTEM_CONTENT = "你是一个AI助手"
 JUDGE_SYSTEM_CONTENT = "你是一位资深的软件测试专家。请分析 AI 的回答是否准确解决了用户的问题，且符合期望结果的语义。请只输出 JSON 格式，不要包含任何其他文字。格式规范：{\"result\": true/false, \"reason\": \"失败原因或空字符串\"}如果回答正确，result为 true，reason为空字符串；如果回答错误，result为 false，并把失败的原因赋值给reason."
+JUDGE_MODEL = "deepseek"   #kimi
 #kimi
 USING_MODEL_KIMI = "kimi-k2.6"
 

@@ -4,7 +4,6 @@ from core.logger import logger
 import pytest
 import sys
 import subprocess
-import allure
 from core.commom.ai_model import *
 from core.commom.judge import AiJudge
 
