@@ -4,8 +4,8 @@ from core.logger import logger
 import pytest
 import sys
 import subprocess
-from core.commom.ai_model import *
-from core.commom.judge import AiJudge
+from core.common.ai_model import *
+from core.common.judge import AiJudge
 
 loader = TestCaseLoader()
 TEST_DATA = loader.load_cases(TESTCASE_PATH)

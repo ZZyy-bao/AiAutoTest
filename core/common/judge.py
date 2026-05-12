@@ -1,4 +1,4 @@
-from core.commom.ai_model import *
+from core.common.ai_model import *
 from core.logger import logger
 from config.config import JUDGE_SYSTEM_CONTENT
 import json
@@ -7,7 +7,7 @@ class AiJudge:
     def __init__(self):
         self.judge_system_content = JUDGE_SYSTEM_CONTENT
         self.judge_task_list = []
-        self.set_judge_model
+        self.set_judge_model()
 
     def set_judge_model(self):
         if JUDGE_MODEL == "kimi":
