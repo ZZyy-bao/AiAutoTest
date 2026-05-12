@@ -15,6 +15,7 @@ def test_ai_executor(case_data):
     user_input = case_data['用户输入']
     expected_criteria = case_data['期望结果描述']
     system_prompt = case_data.get('系统提示词', "你是一个助手")
+    context = case_data.get("上下文","")
 
     with allure.step("🤖 执行 AI 问答"):
         try:
@@ -26,7 +27,7 @@ def test_ai_executor(case_data):
             pytest.fail(f"AI 调用失败: {error_msg}")
 
     with allure.step("⚖️ AI 裁判评分"):
-        judge_task = judge_bot.judge(user_input, actual_output, expected_criteria)
+        judge_task = judge_bot.judge(user_input, actual_output, expected_criteria,context)
         allure.attach(str(judge_task), name="裁判评价", attachment_type=allure.attachment_type.TEXT)
 
     with allure.step("📝 最终结果判定"):

@@ -14,9 +14,9 @@ class AiJudge:
             self.judge_model = AiKimi()
         else:
             self.judge_model = AiDeepseek()
-            
-    def judge(self,user_input,ai_output,target_content):
-        content = f"这是用户输入：{user_input},这是期望的AI回答：{target_content},这是AI实际的输出：{ai_output}"
+
+    def judge(self,user_input,ai_output,target_content,context):
+        content = f"这是上下文：{context},这是用户输入：{user_input},这是期望的AI回答：{target_content},这是AI实际的输出：{ai_output}"
         response_content = self.judge_model.chat(
             user_content=content,
             system_content=self.judge_system_content

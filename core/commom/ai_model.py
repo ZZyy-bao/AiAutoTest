@@ -17,15 +17,21 @@ class AiChat:
         )
         self.chat_messages_list = []
     
-    def chat(self,user_content,system_content = DEFAULT_SYSTEM_CONTENT):
+    def chat(self,user_content,system_content = DEFAULT_SYSTEM_CONTENT,context=""):
+        messages = []
         try:
+            if hasattr(context,list) and context:
+                messages.append(context)
+            else:
+                logger.info(f"context为空或者不为表格：{context}")
             start_time = datetime.now().strftime("%H%M%S")
-            completion = self.client.chat.completions.create(
-                model=self.model_name,
-                messages=[
+            messages.append([
                     {"role": "system", "content": system_content},
                     {"role": "user", "content": user_content}
-                ]
+                ])
+            completion = self.client.chat.completions.create(
+                model=self.model_name,
+                messages=messages
             )
             end_time = datetime.now().strftime("%H%M%S")
             response_content = completion.choices[0].message.content
