@@ -29,3 +29,5 @@ TESTCASE_PATH = "test_case"
 ALLURE_REPORT_DIR = os.path.join(TEST_REPORT_DIR, "allure-results")
 ALLURE_HTML_DIR = os.path.join(TEST_REPORT_DIR, "allure-report")
 ALLURE_CLI_PATH = "D:/WorkFile/Tool/allure-2.40.0/bin/allure.bat"
+
+PARALLEL_WORKERS = 2

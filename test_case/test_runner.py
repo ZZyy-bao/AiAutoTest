@@ -18,13 +18,10 @@ def test_ai_executor(case_data):
     context = case_data.get("上下文","")
 
     with allure.step("🤖 执行 AI 问答"):
-        try:
-            actual_output = testai_bot.chat(user_input, system_content=system_prompt)
-            allure.attach(actual_output, name="AI 实际回答", attachment_type=allure.attachment_type.TEXT)
-        except Exception as e:
-            error_msg = str(e)
-            allure.attach(error_msg, name="调用异常", attachment_type=allure.attachment_type.TEXT)
-            pytest.fail(f"AI 调用失败: {error_msg}")
+        actual_output = testai_bot.chat(user_input, system_content=system_prompt)
+        if actual_output is None:
+            pytest.fail("AI 调用失败：模型返回为空（可能超时或出错，详见日志）")
+        allure.attach(actual_output, name="AI 实际回答", attachment_type=allure.attachment_type.TEXT)
 
     with allure.step("⚖️ AI 裁判评分"):
         judge_task = judge_bot.judge(user_input, actual_output, expected_criteria,context)

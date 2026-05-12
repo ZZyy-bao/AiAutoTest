@@ -12,7 +12,7 @@ ai_automation_test/
 │   └── config.py             # 全局配置（模型、路径、环境变量）
 ├── core/                     # 核心层
 │   ├── logger.py             # 日志模块（控制台彩色输出 + 文件日志）
-│   └── commom/
+│   └── common/
 │       ├── ai_model.py       # AI 模型封装（Kimi / DeepSeek）
 │       └── judge.py          # AI 裁判，自动评判测试结果
 ├── test_case/                # 测试用例层
@@ -26,7 +26,7 @@ ai_automation_test/
 │       ├── allure-results/   # Allure 原始结果
 │       ├── allure-report/    # Allure HTML 报告
 │       └── logs/             # 运行日志
-├── run.py                    # 一键执行入口
+├── run.py                    # 一键执行入口（支持并行测试）
 ├── pytest.ini                # pytest 配置
 ├── .env                      # API Key 配置（不提交到 git）
 └── requirements.txt          # 项目依赖
@@ -51,6 +51,11 @@ ai_automation_test/
 ```bash
 pip install -r requirements.txt
 ```
+
+> 如需并行执行，需额外安装 `pytest-xdist`：
+> ```bash
+> pip install pytest-xdist
+> ```
 
 ### 2. 安装 JDK（Allure 依赖）
 
@@ -137,8 +142,10 @@ apikey_deepseek=your_deepseek_api_key_here
 ## 运行测试
 
 ```bash
-# 一键执行所有测试
+# 一键执行所有测试（默认 4 个 worker 并行）
 python run.py
+
+# 如需调整并行数，修改 config/config.py 中的 PARALLEL_WORKERS
 ```
 
 运行完成后，在终端会输出报告路径，例如：
@@ -167,8 +174,10 @@ testcase_loader.py 读取
     ↓
 pytest 参数化（conftest.py）
     ↓
+并行执行（pytest-xdist，可配置 worker 数量）
+    ↓
 test_runner.py 逐条执行
-    ├── 🤖 调用被测 AI（Kimi）
+    ├── 🤖 调用被测 AI（Kimi），120s 超时保护
     ├── ⚖️ AI 裁判评分（DeepSeek）
     └── 📝 断言判定
     ↓
@@ -187,3 +196,4 @@ Allure 报告 + 日志
 | `USING_MODEL_DEEPSEEK` | 裁判 AI 模型 | deepseek-v4-flash |
 | `TESTCASE_PATH` | 测试用例目录 | test_case |
 | `ALLURE_CLI_PATH` | allure 可执行文件路径 | 需根据实际安装路径修改 |
+| `PARALLEL_WORKERS` | 并行执行 worker 数量 | 4 |

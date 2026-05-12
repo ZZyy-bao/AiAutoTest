@@ -21,12 +21,10 @@ class AiChat:
     def chat(self,user_content,system_content = DEFAULT_SYSTEM_CONTENT,context=""):
         messages = []
         try:
-            if hasattr(context,list) and context:
-                messages.append(context)
-            else:
-                logger.info(f"context为空或者不为表格：{context}")
+            if isinstance(context, list) and context:
+                messages.extend(context)
             start_time = datetime.now().strftime("%H%M%S")
-            messages.append([
+            messages.extend([
                     {"role": "system", "content": system_content},
                     {"role": "user", "content": user_content}
                 ])

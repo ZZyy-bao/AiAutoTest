@@ -1,3 +1,5 @@
+import json
+import os
 from config.config import *
 from utils.testcase_loader import TestCaseLoader
 from core.logger import logger
@@ -17,6 +19,8 @@ try:
 except Exception as e:
     logger.error(f"加载测试用例失败，错误信息：{e}")
 
+os.environ["TEST_CASES_JSON"] = json.dumps(TEST_DATA, ensure_ascii=False)
+
 testai_bot = AiKimi()
 judge_bot = AiJudge()
 
@@ -26,7 +30,8 @@ if __name__ == "__main__":
         TESTCASE_PATH, 
         "-v", 
         f"--alluredir={ALLURE_REPORT_DIR}",
-        "--clean-alluredir"
+        "--clean-alluredir",
+        "-n", str(PARALLEL_WORKERS)
     ])
 
     try:

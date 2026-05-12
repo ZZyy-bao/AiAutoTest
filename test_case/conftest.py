@@ -1,13 +1,20 @@
+import json
+import os
 import pytest
 import allure
 
 
 def pytest_generate_tests(metafunc):
-    import run
-    if hasattr(run, 'TEST_DATA') and "case_data" in metafunc.fixturenames:
+    if "case_data" in metafunc.fixturenames:
+        cases_json = os.environ.get("TEST_CASES_JSON")
+        if cases_json:
+            test_data = json.loads(cases_json)
+        else:
+            import run
+            test_data = run.TEST_DATA
         metafunc.parametrize(
             "case_data",
-            run.TEST_DATA,
+            test_data,
             ids=lambda x: f"[{x.get('用例ID', 'Unknown')}]"
         )
 
