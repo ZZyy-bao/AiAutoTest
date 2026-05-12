@@ -1,4 +1,4 @@
-from openai import OpenAI,APIError, RateLimitError
+from openai import OpenAI, APIError, RateLimitError, APITimeoutError
 import os
 from dotenv import load_dotenv
 from config.config import *
@@ -13,7 +13,8 @@ class AiChat:
         self.model_name = model_name
         self.client = OpenAI(
             api_key=self.api_key,
-            base_url=self.base_url
+            base_url=self.base_url,
+            timeout=120.0
         )
         self.chat_messages_list = []
     
@@ -48,12 +49,14 @@ class AiChat:
             self.chat_messages_list.append(chat_message)
             return response_content
             
+        except APITimeoutError as e:
+            logger.error(f"[{self.model_name}] 请求超时 (120s): {e}")
         except RateLimitError as e:
-            logger.error(f"触发限流 (RateLimit): {e}")
+            logger.error(f"[{self.model_name}] 触发限流 (RateLimit): {e}")
         except APIError as e:
-            logger.error(f"OpenAI API 错误: {e}")
+            logger.error(f"[{self.model_name}] OpenAI API 错误: {e}")
         except Exception as e:
-            logger.error(f"未知错误: {e}")
+            logger.error(f"[{self.model_name}] 未知错误: {e}")
         return None
     
 class AiKimi(AiChat):
